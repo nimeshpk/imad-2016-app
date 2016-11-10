@@ -33,9 +33,9 @@ var articles =  {
         title: 'Article Two | Nimesh pk', 
         heading: 'Article Two',
         date: 'Sep 10, 2016',
-        content: `                                                                                                                              <p>
-                        This is the content for my second article.
-                </p>`   
+            content: `                                                                                                                              <p>
+                            This is the content for my second article.
+                    </p>`   
     },
     'article-three': {
         title: 'Article Three | Nimesh pk', 
