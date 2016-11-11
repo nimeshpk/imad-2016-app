@@ -1,7 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
-//var pool = require('pg').Pool;
+var pool = require('pg').Pool;
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
 
@@ -80,14 +80,14 @@ app.post('/create-user', function (req, res) {
    var password = req.body.password;
    var salt = crypto.randomBytes(128).toString('hex');
    var dbString = hash(password, salt);
-   //
-   //pool.query('INSERT INTO "user" (username, password) VALUES ($1, $2)', [username, dbString], function (err, result) {
+   
+   pool.query('INSERT INTO "user" (username, password) VALUES ($1, $2)', [username, dbString], function (err, result) {
      if (err) {
         res.status(500).send(err.toString());
     } else {
         res.send('User sucessfully created: ' + username);
     }   
-   //});
+   });
 });
 
 app.post('/login', function (req, res) {
@@ -96,7 +96,7 @@ app.post('/login', function (req, res) {
    var password = req.body.password;
    
    
- ///  pool.query('SELECT * FROM "user" WHERE username = $1' , [username], function (err, result) {
+   pool.query('SELECT * FROM "user" WHERE username = $1' , [username], function (err, result) {
      if (err) {
         res.status(500).send(err.toString());
     } else {
@@ -114,23 +114,23 @@ app.post('/login', function (req, res) {
         }
       }
     }   
-//   });
+   });
    
 });
 
 
-var pool = new Pool(config);
-app.get('/test-db', function (req, res) {
+//var pool = new Pool(config);
+//app.get('/test-db', function (req, res) {
   // make a select request
   // return a response with the results
-  pool.query('SELECT * FROM test', function (err, result) {
-    if (err) {
-        res.status(500).send(err.toString());
-    } else {
+  //pool.query('SELECT * FROM test', function (err, result) {
+    //if (err) {
+      //  res.status(500).send(err.toString());
+//    } else {
         res.send(JSON.stringify(result.rows));
-    }
-  });
-  });
+  //  }
+ // });
+ // });
 
 
 
