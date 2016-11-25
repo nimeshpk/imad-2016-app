@@ -132,9 +132,6 @@ app.get('/test-db', function (req, res) {
     });
   });
 
-
-
-
 var counter = 0;
 app.get('/counter', function (req, res) {
    counter = counter + 1;
@@ -142,7 +139,7 @@ app.get('/counter', function (req, res) {
 });
 
 var names = [];
-app.get('/submit-name', function (req, res) { // URL :/submit-name?name=xxxx
+app.get('/submit-name', function (req, res) { // /submit-name?name=xxxx
    //get the name from the request
    var name = req.query.name;
    
@@ -151,24 +148,24 @@ app.get('/submit-name', function (req, res) { // URL :/submit-name?name=xxxx
    res.send(JSON.stringify(names));
 });
 
-//app.get('/articles/:articleName', function (req, res) {
+app.get('/articles/:articleName', function (req, res) {
     // article name = article-one
     // articles[articleName] == {} content object for article one
     
     // SELECT * FROM article WHERE title = '\'; DELETE WHERE a = \'asdf'
-    //pool.query("SELECT * FROM article WHERE title = $1" , [req.params.articleName], function (err, result){
-     // (err) {
-       //  res.status(500).send(err.toString());
-    // }   else {
-      //   if (result.rows.length === 0) {
-       //      res.status(404).send('Article Not found');
-      //   } else {
-      //       var articleData = result.rows[0];
-       //      res.send(createTemplate(articleData));
-        }
-//     } 
-//    }); 
-//});
+    pool.query("SELECT * FROM article WHERE title = $1" , [req.params.articleName], function (err, result) {
+     if (err) {
+        res.status(500).send(err.toString());
+        } else {
+            if (result.rows.length === 0) {
+                res.status(404).send('Article Not found');
+            } else {
+                var articleData = result.rows[0];
+                 res.send(createTemplate(articleData));
+            }
+     } 
+   }); 
+});
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
