@@ -63,9 +63,7 @@ function hash (input, salt) {
     // How do we create an hash?    
     var hashed = crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
     return ["pbkdf2", "10000", salt, hashed.toString('hex')].join('$');
-    
 }
-
 
 app.get('/hash/:input', function(req, res) {
     var hashedString = hash(req.params.input, 'this-is-some-random-string'); 
@@ -115,9 +113,7 @@ app.post('/login', function (req, res) {
       }
     }   
    });
-   
 });
-
 
 var pool = new Pool(config);
 app.get('/test-db', function (req, res) {
