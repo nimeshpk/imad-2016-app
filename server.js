@@ -1,7 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
-var pool = require('pg').pool;
+var pool = require('pg').Pool;
 var crypto = require('crypto');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -140,7 +140,7 @@ app.get('/logout', function (req, res) {
    res.send('Logged out');
 }); 
 
-var pool = new pool(config);
+var pool = new Pool(config);
 app.get('/test-db', function (req, res) {
   // make a select request
   // return a response with the results
